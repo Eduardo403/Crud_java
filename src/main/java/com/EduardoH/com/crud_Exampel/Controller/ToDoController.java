@@ -3,10 +3,7 @@ package com.EduardoH.com.crud_Exampel.Controller;
 import com.EduardoH.com.crud_Exampel.Model.Task;
 import com.EduardoH.com.crud_Exampel.Repositori.AllReositori;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +29,15 @@ public class ToDoController {
     public String saveTask(@RequestBody Task task){
         allRepositori.save(task);
         return "save task";
+    }
+    @PutMapping(value = "/update/{id}")
+
+    public String updateTask(@PathVariable long id,@RequestBody Task task ){
+        Task updatedTask = allRepositori.findById(id).get();
+        updatedTask.setTitle(task.getTitle());
+        updatedTask.setDescription(task.getDescription());
+allRepositori.save(updatedTask);
+return "update task";
     }
 }
 
